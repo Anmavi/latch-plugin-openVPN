@@ -20,10 +20,8 @@
 
 2. Open a terminal. Change to "python" directory, where you have saved the "latch.conf" file. Run "sudo python3 install.py -f latch.conf".
 
-3. Edit "/etc/init.d/openvpn" file. Add at the begginning "export LD_PRELOAD=/lib/x86_64-linux-gnu/libpam.so.0" (may be you need to use a different path. Look for "libpam.so.0" in your file system directory).
+3. Open "server.conf". Add "plugin /usr/lib/openvpn/openvpn-auth-pam.so latch-login" (may be you need to use a different path. Look for "openvpn-auth-pam.so" in your file system directory).
 
-4. Open "server.conf". Add "plugin /usr/lib/openvpn/openvpn-auth-pam.so latch-login" (may be you need to use a different path. Look for "openvpn-auth-pam.so" in your file system directory).
-
-5. Linux Restart Openvpn "sudo service openvpn restart".
+4. Linux Restart Openvpn "sudo service openvpn restart".
 
 Then, on the client, specify that the user enter a password by adding "auth-user-pass" to the "client.conf".

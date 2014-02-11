@@ -4,7 +4,7 @@
 # run as root
 
 '''
- This plugin allows to config latch settings -openvpn- in some UNIX systems (like Linux)
+ This plugin allows to config latch settings in some UNIX systems (like Linux)
  Copyright (C) 2013 Eleven Paths
 
  This library is free software; you can redistribute it and/or
@@ -27,7 +27,6 @@ import easygui as eg
 import sys
 import os
 import urllib.request
-import latch
 
 from latchHelper import *
 
@@ -41,7 +40,7 @@ if app_id == None or secret_key == None:
     exit();
 
 msg = "Identify your application"
-title = "Settings"
+title = PLUGIN_NAME + " settings"
 fieldNames = ["Application ID","Secret key"]
 fieldValues = [app_id, secret_key]  # we start with blanks for the values
 fieldValues = eg.multenterbox(msg,title, fieldNames, fieldValues)

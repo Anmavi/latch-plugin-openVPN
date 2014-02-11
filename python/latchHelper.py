@@ -17,10 +17,6 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 '''
 
-#!/usr/bin/env python3
-# -*- coding: UTF-8 -*-
-# vim: set fileencoding=utf-8
-# Run as root
 
 import sys
 import os
@@ -28,17 +24,20 @@ import urllib.request
 import latch
 
 
-LATCH_PATH = "/etc/openvpn/latch/"
+PLUGIN_NAME = "OpenVPN - latch"
 
-LATCH_ACCOUNTS = "/etc/openvpn/latch/latch_accounts"
+LATCH_PATH = "/usr/lib/openvpn/latch/"
+
+LATCH_ACCOUNTS = LATCH_PATH + ".latch_accounts"
 LATCH_CONFIG =  "/etc/openvpn-latch.conf"
 LATCH_HOST = "https://latch.elevenpaths.com"
 
-LATCH_OPENVPN_SUDOERS = "/etc/sudoers.d/latch_openvpn_conf"
-LATCH_LOGIN_PAM_CONFIG = "/etc/pam.d/latch-login"
+LOGIN_PAM_CONFIG_FILE = "/etc/pam.d/login"
+OPENVPN_PAM_CONFIG_FILE = "/etc/pam.d/openvpn"
+
 LATCH_PAM_SO = "/lib/security/pam_latch.so"
 
-LOGIN_PAM_CONFIG = "/etc/pam.d/login"
+LATCH_PAM_CONFIG = "auth       required	    " + LATCH_PAM_SO + "    accounts=" + LATCH_ACCOUNTS + "    config=" + LATCH_CONFIG
 
 LATCH_PLUGIN_GUI = LATCH_PATH + "latchPluginGUI.py"
 SETTINGS_PLUGIN_GUI = LATCH_PATH + "settingsGUI.py"

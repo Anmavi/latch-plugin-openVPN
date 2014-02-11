@@ -30,17 +30,29 @@ import shutil
 from latchHelper import *
 
 
+if os.path.isfile(OPENVPN_PAM_CONFIG_FILE):
+    # read PAM config file
+    f = open(OPENVPN_PAM_CONFIG_FILE,"r");
+    lines = f.readlines();
+    f.close();
+    # delete latch PAM 
+    f = open(OPENVPN_PAM_CONFIG_FILE,"w");
+    for line in lines:
+        if line.find(LATCH_PAM_CONFIG) == -1 :
+            f.write(line);
+    f.close();
 
 if os.path.isfile(LATCH_ACCOUNTS):
     os.remove(LATCH_ACCOUNTS)
 if os.path.isfile(LATCH_CONFIG):
     os.remove(LATCH_CONFIG)
-if os.path.isfile(LATCH_PAM_SO):
-    os.remove(LATCH_PAM_SO)
-if os.path.isfile(LATCH_OPENVPN_SUDOERS):
-    os.remove(LATCH_OPENVPN_SUDOERS)
-if os.path.isfile(LATCH_LOGIN_PAM_CONFIG):
-    os.remove(LATCH_LOGIN_PAM_CONFIG)
 if os.path.isdir(LATCH_PATH):
     shutil.rmtree(LATCH_PATH)
+if os.path.isfile("/usr/bin/pairOpenVPN"):
+    os.remove("/usr/bin/pairOpenVPN")
+if os.path.isfile("/usr/bin/unpairOpenVPN"):
+    os.remove("/usr/bin/unpairOpenVPN")
+if os.path.isfile("/usr/bin/latchOpenVPN"):
+    os.remove("/usr/bin/latchOpenVPN")
+
 print("Uninstall completed")

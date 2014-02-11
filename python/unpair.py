@@ -4,7 +4,7 @@
 # Run as root
 
 '''
- This script allows to unpair our openvpn Server in some UNIX systems (like Linux)
+ This script allows to unpair our application in some UNIX systems (like Linux)
  Copyright (C) 2013 Eleven Paths
 
  This library is free software; you can redistribute it and/or

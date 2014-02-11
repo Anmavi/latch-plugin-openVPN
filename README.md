@@ -9,7 +9,7 @@
 
  * Libraries: python3 python3-tk build-essential libpam0g-dev libcurl4-openssl-dev liblzo2-dev (apt-get install)
 
- * EasyGui (included in latch-plugin-pam-openvpn package)
+ * EasyGui (included in latch-plugin package)
 
 * To get the "Application ID" and "Secret", (fundamental values for integrating Latch in any application), it’s necessary to register a developer account in Latch's website: https://latch.elevenpaths.com. On the upper right side, click on "Developer area".
 
@@ -18,9 +18,9 @@
 
 1. Go to "python" directory in plugin package, open and edit "latch-model.conf" file. Add your settings and save it in the same directory as "latch.conf".
 
-2. Open a terminal. Change to "python" directory, where you have saved the "latch.conf" file. Run "sudo python3 install.py -f latch.conf".
+2. cd to the top-level directory of the plugin, and use the "sudo ./install" command to install it.
 
-3. Open "server.conf". Add "plugin /usr/lib/openvpn/openvpn-auth-pam.so latch-login" (may be you need to use a different path. Look for "openvpn-auth-pam.so" in your file system directory).
+3. Open "server.conf". Add "plugin /usr/lib/openvpn/openvpn-auth-pam.so openvpn" to use it. May be you need to use a different path. Look for "openvpn-auth-pam.so" in your file system directory.
 
 4. Linux Restart Openvpn "sudo service openvpn restart".
 

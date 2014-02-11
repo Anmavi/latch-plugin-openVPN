@@ -45,61 +45,66 @@ if len(sys.argv) == 3 and sys.argv[1] == "-f":
     f.writelines(lines)
     f.close()
 else:
-    print("use 'install.py -f <file.conf>'");
+    print("use 'setup.py -f <file.conf>'");
     exit();
 
-if not os.path.isfile(LATCH_LOGIN_PAM_CONFIG): 
-    # add latch-login PAM configuration
-    fd = os.open (LATCH_LOGIN_PAM_CONFIG, os.O_CREAT, int("0440",8)) 
-    f = open(LATCH_LOGIN_PAM_CONFIG,"a")
-
-    # read login PAM config file
-    f = open(LOGIN_PAM_CONFIG,"r")
+if os.path.isfile(OPENVPN_PAM_CONFIG_FILE): 
+    # read openvpn PAM config file
+    f = open(OPENVPN_PAM_CONFIG_FILE,"r")
     lines = f.readlines()
     f.close()
-
-    # write latch-login PAM config file
-    f = open(LATCH_LOGIN_PAM_CONFIG,"a")
+    # find latch 
+    found = False
+    for line in lines:
+        if line.find(LATCH_PAM_CONFIG) != -1 :
+            found = True
+            break
+    if not found:
+        # add latch PAM configuration
+        f = open(OPENVPN_PAM_CONFIG_FILE,"a")
+        f.write(LATCH_PAM_CONFIG)
+        f.close()
+else:
+    # add openvpn PAM configuration
+    fd = os.open (OPENVPN_PAM_CONFIG_FILE, os.O_CREAT, int("0644",8)) 
+    # read login PAM config file
+    f = open(LOGIN_PAM_CONFIG_FILE,"r")
+    lines = f.readlines()
+    f.close()
+    # write openvpn PAM config file
+    f = open(OPENVPN_PAM_CONFIG_FILE,"a")
+    f.write("# OpenVPN PAM config\n")
     f.writelines(lines)
-    f.write("auth       required	    " + LATCH_PAM_SO + "    accounts=" + LATCH_ACCOUNTS + "    config=" + LATCH_CONFIG)
+    f.write(LATCH_PAM_CONFIG)
     f.close()
 
-    # install latch in /etc/openvpn
+# install latch in /usr/lib/openvpn/
+if not os.path.isdir(LATCH_PATH):
     os.mkdir(LATCH_PATH)
-
+if not os.path.isfile(LATCH_PLUGIN_GUI):
     os.open (LATCH_PLUGIN_GUI, os.O_CREAT, int("0100",8))
     shutil.copyfile('latchPluginGUI.py', LATCH_PLUGIN_GUI)
-
+if not os.path.isfile(SETTINGS_PLUGIN_GUI):
     os.open (SETTINGS_PLUGIN_GUI, os.O_CREAT, int("0100",8))
     shutil.copyfile('settingsGUI.py', SETTINGS_PLUGIN_GUI)
-
+if not os.path.isfile(PAIR_PLUGIN):
     os.open (PAIR_PLUGIN, os.O_CREAT, int("0100",8))
     shutil.copyfile('pair.py', PAIR_PLUGIN)
-
+if not os.path.isfile(UNPAIR_PLUGIN):
     os.open (UNPAIR_PLUGIN, os.O_CREAT, int("0100",8))
     shutil.copyfile('unpair.py', UNPAIR_PLUGIN)
-
+if not os.path.isfile(SETTINGS_PLUGIN):
     os.open (SETTINGS_PLUGIN, os.O_CREAT, int("0100",8))
     shutil.copyfile('settings.py', SETTINGS_PLUGIN)
-
+if not os.path.isfile(LATCH_HELPER_PLUGIN):
     os.open (LATCH_HELPER_PLUGIN, os.O_CREAT, int("0100",8))
     shutil.copyfile('latchHelper.py', LATCH_HELPER_PLUGIN)
-
+if not os.path.isfile(LATCH_API):
     os.open (LATCH_API, os.O_CREAT, int("0100",8))
     shutil.copyfile('latch.py', LATCH_API)
 
-
-    # add latch_accounts file 
+# add latch_accounts file 
+if not os.path.isfile(LATCH_ACCOUNTS):
     fd = os.open (LATCH_ACCOUNTS, os.O_CREAT, int("0600",8)) 
 
-    # add sudo privileges for latch execution
-    fd = os.open (LATCH_OPENVPN_SUDOERS, os.O_CREAT, int("0440",8))
-    f = open(LATCH_OPENVPN_SUDOERS,"a")
-    f.write("ALL ALL= NOPASSWD: " + LATCH_PLUGIN_GUI + "\n");
-    f.write("ALL ALL= NOPASSWD: " + PAIR_PLUGIN + "\n");
-    f.write("ALL ALL= NOPASSWD: " + UNPAIR_PLUGIN + "\n");
-    f.close();
-
-    print("Installed")
-else:
-    print("latch-auth-pam openvpn plugin is already installed")
+print("latch plugin installing...")

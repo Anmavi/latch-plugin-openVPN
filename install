@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+cd python/
+find latch.conf
+sudo python3 setup.py -f latch.conf
+cd ../include/
+gcc wrapper_pair.c -o pairOVPN
+gcc wrapper_unpair.c -o unpairOVPN
+gcc wrapper_latchPluginGUI.c -o latchOVPN
+gcc wrapper_settings.c -o config_latchOVPN
+sudo chown root:root pairOVPN unpairOVPN latchOVPN config_latchOVPN
+sudo mv pairOVPN /usr/bin/
+sudo mv unpairOVPN /usr/bin/
+sudo mv latchOVPN /usr/bin/
+sudo mv config_latchOVPN /usr/sbin/
+sudo chmod 4111 /usr/bin/latchOVPN /usr/bin/pairOVPN /usr/bin/unpairOVPN
+sudo chmod 0100 /usr/sbin/config_latchOVPN
+cd ../pam/libpam/
+sudo make

@@ -32,8 +32,8 @@ from latchHelper import *
 
 
 if len(sys.argv) == 4 and sys.argv[2] == "-f":
-    secret_key = getConfigParameter("secret_key", sys.argv[2])
-    app_id = getConfigParameter("app_id", sys.argv[2])
+    secret_key = getConfigParameter("secret_key", sys.argv[3])
+    app_id = getConfigParameter("app_id", sys.argv[3])
     replaceConfigParameters(app_id, secret_key)
 
 elif len(sys.argv) != 2:

@@ -39,6 +39,11 @@ LATCH_PAM_SO = "/lib/security/pam_latch.so"
 
 LATCH_PAM_CONFIG = "auth       required	    " + LATCH_PAM_SO + "    accounts=" + LATCH_ACCOUNTS + "    config=" + LATCH_CONFIG
 
+PAIR_BIN = "/usr/bin/pairOVPN"
+UNPAIR_BIN = "/usr/bin/unpairOVPN"
+PLUGIN_BIN = "/usr/bin/latchOVPN"
+SETTINGS_BIN = "/usr/sbin/config_latchOVPN"
+
 LATCH_PLUGIN_GUI = LATCH_PATH + "latchPluginGUI.py"
 SETTINGS_PLUGIN_GUI = LATCH_PATH + "settingsGUI.py"
 PAIR_PLUGIN = LATCH_PATH + "pair.py"
@@ -55,7 +60,6 @@ def getConfigParameter(name, configFile=LATCH_CONFIG):
     try:
         f = open(configFile,"r")
     except IOError as e:
-        print ('cannot open', configFile)
         return None
 
     lines = f.readlines()

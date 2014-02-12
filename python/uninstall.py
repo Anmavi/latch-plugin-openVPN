@@ -48,11 +48,13 @@ if os.path.isfile(LATCH_CONFIG):
     os.remove(LATCH_CONFIG)
 if os.path.isdir(LATCH_PATH):
     shutil.rmtree(LATCH_PATH)
-if os.path.isfile("/usr/bin/pairOpenVPN"):
-    os.remove("/usr/bin/pairOpenVPN")
-if os.path.isfile("/usr/bin/unpairOpenVPN"):
-    os.remove("/usr/bin/unpairOpenVPN")
-if os.path.isfile("/usr/bin/latchOpenVPN"):
-    os.remove("/usr/bin/latchOpenVPN")
+if os.path.isfile(PAIR_BIN):
+    os.remove(PAIR_BIN)
+if os.path.isfile(UNPAIR_BIN):
+    os.remove(UNPAIR_BIN)
+if os.path.isfile(PLUGIN_BIN):
+    os.remove(PLUGIN_BIN)
+if os.path.isfile(SETTINGS_BIN):
+    os.remove(SETTINGS_BIN)
 
 print("Uninstall completed")

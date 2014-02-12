@@ -49,23 +49,46 @@ LATCH_HELPER_PLUGIN = LATCH_PATH + "latchHelper.py"
 LATCH_API = LATCH_PATH + "latch.py"
 
 
-
-def getConfigParameter(name):
+def getConfigParameter(name, configFile=LATCH_CONFIG):
 
     # read latch config file
-    f = open(LATCH_CONFIG,"r");
-    lines = f.readlines();
-    f.close();
+    try:
+        f = open(configFile,"r")
+    except IOError as e:
+        print ('cannot open', configFile)
+        return None
+
+    lines = f.readlines()
+    f.close()
 
     # find parameter
     for line in lines:
         if line.find(name) != -1:
             break;
 
-    words = line.split();   
+    words = line.split()
     if len(words) == 3:
-        return words[2];
-    return None;
+        return words[2]
+    return None
+
+def replaceConfigParameters(newAppId, newSecret):
+
+    # write config file
+    fd = os.open (LATCH_CONFIG, os.O_WRONLY | os.O_CREAT, int("0600",8))
+    f = os.fdopen(fd,"w")
+    f.write("#\n")
+    f.write("# Configuration file for " + PLUGIN_NAME + "\n")
+    f.write("#\n")
+    f.write("\n")
+    f.write("# Identify your Application\n")
+    f.write("# Secret key value\n")
+    f.write("#\n")
+    f.write("app_id = " + newAppId + "\n")
+    f.write("\n")
+    f.write("# Application ID value\n")
+    f.write("#\n")
+    f.write("secret_key = " + newSecret + "\n")
+    f.close()
 
 def getAccountId(user):
 
@@ -132,4 +155,6 @@ def addAccount(user, accountId):
         fd = os.open (LATCH_ACCOUNTS, os.O_WRONLY | os.O_CREAT, int("0600",8))
         f = os.fdopen(fd)
         f.write(user + ": " + accountId + "\n");
-        f.close();    
+        f.close();  
+
+  

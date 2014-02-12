@@ -53,22 +53,7 @@ while 1:
         if fieldValues[i].strip() == "":
             errmsg += ('"%s" is a required field.\n\n' % fieldNames[i])
     if errmsg == "":
-        # write config file
-        fd = os.open (LATCH_CONFIG, os.O_WRONLY | os.O_CREAT, int("0600",8))
-        f = os.fdopen(fd,"w")
-        f.write("#\n")
-        f.write("# Configuration file for the latch PAM module\n")
-        f.write("#\n")
-        f.write("\n")
-        f.write("# Identify your Application\n")
-        f.write("# Secret key value\n")
-        f.write("#\n")
-        f.write("app_id = " + fieldValues[0] + "\n")
-        f.write("\n")
-        f.write("# Application ID value\n")
-        f.write("#\n")
-        f.write("secret_key = " + fieldValues[1] + "\n")
-        f.close()
+        replaceConfigParameters(fieldValues[0], fieldValues[1])
         secret_key = fieldValues[1]
         app_id = fieldValues[0]
         break # no problems found

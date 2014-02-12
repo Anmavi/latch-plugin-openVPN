@@ -1,24 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 
-int main(int arc, char **argv)
+int main(int argc, char **argv)
 {
-    if (arc == 2){
-        if(strlen(argv[1]) == 6){
-            char call[38]; 
-            strncpy(call, "/usr/lib/openvpn/latch/pair.py ", 31);
-            strncat(call, argv[1], 6);
-            call[37] = '\0';
-            system(call);
-        }else{
-            printf("Token not found\n");
-        } 
+	if(argc == 2){
+		execl("/usr/lib/openvpn/latch/pair.py", "pair.py", argv[1], NULL);
+	}else if(argc == 4 && strncmp("-f", argv[2], 2) == 0){
+		execl("/usr/lib/openvpn/latch/pair.py", "pair.py", argv[1], "-f", argv[3], NULL);
+	}else{
+        	printf("use 'pairOVPN <TOKEN> [-f latch.conf]'\n");
+	}
 
-    }else{
-        printf("use 'pairOVPN <TOKEN>'\n");
-    }
-
-    return 0;
+	return 0;
 }

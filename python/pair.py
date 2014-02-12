@@ -32,19 +32,9 @@ from latchHelper import *
 
 
 if len(sys.argv) == 4 and sys.argv[2] == "-f":
-    # read config file
-    try:
-        f = open(sys.argv[3],"r")
-    except IOError as e:
-        print ('cannot open', sys.argv[2])
-        exit()
-
-    lines = f.readlines();
-    f.close();
-    # write config file
-    f = open(LATCH_CONFIG,"w");
-    f.writelines(lines);
-    f.close();
+    secret_key = getConfigParameter("secret_key", sys.argv[2])
+    app_id = getConfigParameter("app_id", sys.argv[2])
+    replaceConfigParameters(app_id, secret_key)
 
 elif len(sys.argv) != 2:
     print("use 'pair.py <TOKEN> [ -f <file.conf> ]'");

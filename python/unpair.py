@@ -4,7 +4,7 @@
 # Run as root
 
 '''
- This script allows to unpair our openvpn Server in some UNIX systems (like Linux)
+ This script allows to unpair our application in some UNIX systems (like Linux)
  Copyright (C) 2013 Eleven Paths
 
  This library is free software; you can redistribute it and/or
@@ -33,19 +33,13 @@ from latchHelper import *
 
 
 if len(sys.argv) == 3 and sys.argv[1] == "-f":
-    # read config file
-    try:
-        f = open(sys.argv[2],"r")
-    except IOError as e:
-        print ('cannot open', sys.argv[2])
+    secret_key = getConfigParameter("secret_key", sys.argv[2])
+    app_id = getConfigParameter("app_id", sys.argv[2])
+    if app_id == None or secret_key == None:
+        print("Can't read config file");
         exit()
 
-    lines = f.readlines();
-    f.close();
-    # write config file
-    f = open(LATCH_CONFIG,"w");
-    f.writelines(lines);
-    f.close();
+    replaceConfigParameters(app_id, secret_key)
 elif len(sys.argv) != 1:
     print("use 'unpair.py [ -f <file.conf> ]'");
     exit();

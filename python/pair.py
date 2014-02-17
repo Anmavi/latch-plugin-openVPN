@@ -4,7 +4,7 @@
 # Run as root
 
 '''
- This script allows to pair our openvpn Server with Latch in some UNIX systems (like Linux)
+ This script allows to pair our application with Latch in some UNIX systems (like Linux)
  Copyright (C) 2013 Eleven Paths
 
  This library is free software; you can redistribute it and/or
@@ -32,19 +32,13 @@ from latchHelper import *
 
 
 if len(sys.argv) == 4 and sys.argv[2] == "-f":
-    # read config file
-    try:
-        f = open(sys.argv[3],"r")
-    except IOError as e:
-        print ('cannot open', sys.argv[2])
+    secret_key = getConfigParameter("secret_key", sys.argv[3])
+    app_id = getConfigParameter("app_id", sys.argv[3])
+    if app_id == None or secret_key == None:
+        print("Can't read config file");
         exit()
 
-    lines = f.readlines();
-    f.close();
-    # write config file
-    f = open(LATCH_CONFIG,"w");
-    f.writelines(lines);
-    f.close();
+    replaceConfigParameters(app_id, secret_key)
 
 elif len(sys.argv) != 2:
     print("use 'pair.py <TOKEN> [ -f <file.conf> ]'");

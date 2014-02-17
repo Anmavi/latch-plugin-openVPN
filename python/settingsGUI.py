@@ -4,7 +4,7 @@
 # run as root
 
 '''
- This plugin allows to config latch settings -openvpn- in some UNIX systems (like Linux)
+ This plugin allows to config latch settings in some UNIX systems (like Linux)
  Copyright (C) 2013 Eleven Paths
 
  This library is free software; you can redistribute it and/or
@@ -27,7 +27,6 @@ import easygui as eg
 import sys
 import os
 import urllib.request
-import latch
 
 from latchHelper import *
 
@@ -41,7 +40,7 @@ if app_id == None or secret_key == None:
     exit();
 
 msg = "Identify your application"
-title = "Settings"
+title = PLUGIN_NAME + " settings"
 fieldNames = ["Application ID","Secret key"]
 fieldValues = [app_id, secret_key]  # we start with blanks for the values
 fieldValues = eg.multenterbox(msg,title, fieldNames, fieldValues)
@@ -54,22 +53,7 @@ while 1:
         if fieldValues[i].strip() == "":
             errmsg += ('"%s" is a required field.\n\n' % fieldNames[i])
     if errmsg == "":
-        # write config file
-        fd = os.open (LATCH_CONFIG, os.O_WRONLY | os.O_CREAT, int("0600",8))
-        f = os.fdopen(fd,"w")
-        f.write("#\n")
-        f.write("# Configuration file for the latch PAM module\n")
-        f.write("#\n")
-        f.write("\n")
-        f.write("# Identify your Application\n")
-        f.write("# Secret key value\n")
-        f.write("#\n")
-        f.write("app_id = " + fieldValues[0] + "\n")
-        f.write("\n")
-        f.write("# Application ID value\n")
-        f.write("#\n")
-        f.write("secret_key = " + fieldValues[1] + "\n")
-        f.close()
+        replaceConfigParameters(fieldValues[0], fieldValues[1])
         secret_key = fieldValues[1]
         app_id = fieldValues[0]
         break # no problems found

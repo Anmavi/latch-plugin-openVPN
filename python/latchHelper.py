@@ -17,10 +17,6 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 '''
 
-#!/usr/bin/env python3
-# -*- coding: UTF-8 -*-
-# vim: set fileencoding=utf-8
-# Run as root
 
 import sys
 import os
@@ -28,17 +24,25 @@ import urllib.request
 import latch
 
 
-LATCH_PATH = "/etc/openvpn/latch/"
+PLUGIN_NAME = "OpenVPN - latch"
 
-LATCH_ACCOUNTS = "/etc/openvpn/latch/latch_accounts"
+LATCH_PATH = "/usr/lib/openvpn/latch/"
+
+LATCH_ACCOUNTS = LATCH_PATH + ".latch_accounts"
 LATCH_CONFIG =  "/etc/openvpn-latch.conf"
 LATCH_HOST = "https://latch.elevenpaths.com"
 
-LATCH_OPENVPN_SUDOERS = "/etc/sudoers.d/latch_openvpn_conf"
-LATCH_LOGIN_PAM_CONFIG = "/etc/pam.d/latch-login"
+LOGIN_PAM_CONFIG_FILE = "/etc/pam.d/login"
+OPENVPN_PAM_CONFIG_FILE = "/etc/pam.d/openvpn"
+
 LATCH_PAM_SO = "/lib/security/pam_latch.so"
 
-LOGIN_PAM_CONFIG = "/etc/pam.d/login"
+LATCH_PAM_CONFIG = "auth       required	    " + LATCH_PAM_SO + "    accounts=" + LATCH_ACCOUNTS + "    config=" + LATCH_CONFIG
+
+PAIR_BIN = "/usr/bin/pairOVPN"
+UNPAIR_BIN = "/usr/bin/unpairOVPN"
+PLUGIN_BIN = "/usr/bin/latchOVPN"
+SETTINGS_BIN = "/usr/sbin/config_latchOVPN"
 
 LATCH_PLUGIN_GUI = LATCH_PATH + "latchPluginGUI.py"
 SETTINGS_PLUGIN_GUI = LATCH_PATH + "settingsGUI.py"
@@ -50,23 +54,45 @@ LATCH_HELPER_PLUGIN = LATCH_PATH + "latchHelper.py"
 LATCH_API = LATCH_PATH + "latch.py"
 
 
-
-def getConfigParameter(name):
+def getConfigParameter(name, configFile=LATCH_CONFIG):
 
     # read latch config file
-    f = open(LATCH_CONFIG,"r");
-    lines = f.readlines();
-    f.close();
+    try:
+        f = open(configFile,"r")
+    except IOError as e:
+        return None
+
+    lines = f.readlines()
+    f.close()
 
     # find parameter
     for line in lines:
         if line.find(name) != -1:
             break;
 
-    words = line.split();   
+    words = line.split()
     if len(words) == 3:
-        return words[2];
-    return None;
+        return words[2]
+    return None
+
+def replaceConfigParameters(newAppId, newSecret):
+
+    # write config file
+    fd = os.open (LATCH_CONFIG, os.O_WRONLY | os.O_CREAT, int("0600",8))
+    f = os.fdopen(fd,"w")
+    f.write("#\n")
+    f.write("# Configuration file for " + PLUGIN_NAME + "\n")
+    f.write("#\n")
+    f.write("\n")
+    f.write("# Identify your Application\n")
+    f.write("# Secret key value\n")
+    f.write("#\n")
+    f.write("app_id = " + newAppId + "\n")
+    f.write("\n")
+    f.write("# Application ID value\n")
+    f.write("#\n")
+    f.write("secret_key = " + newSecret + "\n")
+    f.close()
 
 def getAccountId(user):
 
@@ -133,4 +159,6 @@ def addAccount(user, accountId):
         fd = os.open (LATCH_ACCOUNTS, os.O_WRONLY | os.O_CREAT, int("0600",8))
         f = os.fdopen(fd)
         f.write(user + ": " + accountId + "\n");
-        f.close();    
+        f.close();  
+
+  

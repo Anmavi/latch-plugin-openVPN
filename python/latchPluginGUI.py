@@ -4,7 +4,7 @@
 # run as root
 
 '''
- This plugin allows to pair and upair our openvpn Server with Latch in some UNIX systems (like Linux)
+ This plugin allows to pair and upair our application with Latch in some UNIX systems (like Linux)
  Copyright (C) 2013 Eleven Paths
 
  This library is free software; you can redistribute it and/or
@@ -129,7 +129,7 @@ while 1:
     else:
         operations = ["Pair","Exit"]
 
-    reply = eg.buttonbox(msg='Operation', title='Latch plugin - Openvpn',image=None, choices=operations)
+    reply = eg.buttonbox(msg='Operation', title=PLUGIN_NAME,image=None, choices=operations)
 
     if reply == "Pair":
         pair_gui()

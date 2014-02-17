@@ -149,7 +149,7 @@ void send_syslog_alert(){
 
 /* expected hook, this is where custom stuff happens */
 PAM_EXTERN int pam_sm_authenticate(pam_handle_t* pamh, int flags, int argc, const char **argv) {
-	int ret = 0;
+	//int ret = 0;
 
 	const char* pUsername = NULL;				
 	const char* pAccountId = NULL;
@@ -159,14 +159,16 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t* pamh, int flags, int argc, cons
 	const char* pConfig = NULL;
 	char *buffer;				
 	
+	/*
 	struct pam_message msg[1],*pmsg[1];
 	struct pam_response *resp;
 
-	/* setting up conversation call prompting for one-time code */
+	// setting up conversation call prompting for one-time code 
 	pmsg[0] = &msg[0] ;
 	msg[0].msg_style = PAM_PROMPT_ECHO_ON ;
 	msg[0].msg = "One-time code: " ;
 	resp = NULL ;
+	*/
 
 	if (pam_get_user(pamh, &pUsername, NULL) != PAM_SUCCESS) {
 		return PAM_AUTH_ERR;
@@ -187,7 +189,6 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t* pamh, int flags, int argc, cons
 		return PAM_SUCCESS;
 	}
 
-	ret = PAM_SUCCESS;
 
 	pAppId = getConfig("app_id", pConfig);
 	pSecretKey = getConfig("secret_key", pConfig);

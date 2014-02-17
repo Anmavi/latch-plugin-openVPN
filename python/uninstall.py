@@ -30,17 +30,31 @@ import shutil
 from latchHelper import *
 
 
+if os.path.isfile(OPENVPN_PAM_CONFIG_FILE):
+    # read PAM config file
+    f = open(OPENVPN_PAM_CONFIG_FILE,"r");
+    lines = f.readlines();
+    f.close();
+    # delete latch PAM 
+    f = open(OPENVPN_PAM_CONFIG_FILE,"w");
+    for line in lines:
+        if line.find(LATCH_PAM_CONFIG) == -1 :
+            f.write(line);
+    f.close();
 
 if os.path.isfile(LATCH_ACCOUNTS):
     os.remove(LATCH_ACCOUNTS)
 if os.path.isfile(LATCH_CONFIG):
     os.remove(LATCH_CONFIG)
-if os.path.isfile(LATCH_PAM_SO):
-    os.remove(LATCH_PAM_SO)
-if os.path.isfile(LATCH_OPENVPN_SUDOERS):
-    os.remove(LATCH_OPENVPN_SUDOERS)
-if os.path.isfile(LATCH_LOGIN_PAM_CONFIG):
-    os.remove(LATCH_LOGIN_PAM_CONFIG)
 if os.path.isdir(LATCH_PATH):
     shutil.rmtree(LATCH_PATH)
+if os.path.isfile(PAIR_BIN):
+    os.remove(PAIR_BIN)
+if os.path.isfile(UNPAIR_BIN):
+    os.remove(UNPAIR_BIN)
+if os.path.isfile(PLUGIN_BIN):
+    os.remove(PLUGIN_BIN)
+if os.path.isfile(SETTINGS_BIN):
+    os.remove(SETTINGS_BIN)
+
 print("Uninstall completed")

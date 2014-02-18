@@ -17,3 +17,5 @@ sudo chmod 4111 /usr/bin/latchOVPN /usr/bin/pairOVPN /usr/bin/unpairOVPN
 sudo chmod 0100 /usr/sbin/config_latchOVPN
 cd ../pam/libpam/
 sudo make
+cd ../../easyGUI/
+sudo python3 setup.py install

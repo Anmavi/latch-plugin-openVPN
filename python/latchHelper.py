@@ -20,15 +20,15 @@
 
 import sys
 import os
-import urllib.request
 import latch
 
 
 PLUGIN_NAME = "OpenVPN - latch"
 
-LATCH_PATH = "/usr/lib/openvpn/latch/"
+LATCH_PATH = "/usr/lib/latch/"
+LATCH_OPENVPN_PATH = LATCH_PATH + "openvpn/"
 
-LATCH_ACCOUNTS = LATCH_PATH + ".latch_accounts"
+LATCH_ACCOUNTS = LATCH_OPENVPN_PATH + ".latch_accounts"
 LATCH_CONFIG =  "/etc/openvpn-latch.conf"
 LATCH_HOST = "https://latch.elevenpaths.com"
 
@@ -44,14 +44,14 @@ UNPAIR_BIN = "/usr/bin/unpairOVPN"
 PLUGIN_BIN = "/usr/bin/latchOVPN"
 SETTINGS_BIN = "/usr/sbin/config_latchOVPN"
 
-LATCH_PLUGIN_GUI = LATCH_PATH + "latchPluginGUI.py"
-SETTINGS_PLUGIN_GUI = LATCH_PATH + "settingsGUI.py"
-PAIR_PLUGIN = LATCH_PATH + "pair.py"
-UNPAIR_PLUGIN = LATCH_PATH + "unpair.py"
-SETTINGS_PLUGIN = LATCH_PATH + "settings.py"
-LATCH_HELPER_PLUGIN = LATCH_PATH + "latchHelper.py"
+LATCH_PLUGIN_GUI = LATCH_OPENVPN_PATH + "latchPluginGUI.py"
+SETTINGS_PLUGIN_GUI = LATCH_OPENVPN_PATH + "settingsGUI.py"
+PAIR_PLUGIN = LATCH_OPENVPN_PATH + "pair.py"
+UNPAIR_PLUGIN = LATCH_OPENVPN_PATH + "unpair.py"
+SETTINGS_PLUGIN = LATCH_OPENVPN_PATH + "settings.py"
+LATCH_HELPER_PLUGIN = LATCH_OPENVPN_PATH + "latchHelper.py"
 
-LATCH_API = LATCH_PATH + "latch.py"
+LATCH_API = LATCH_OPENVPN_PATH + "latch.py"
 
 
 def getConfigParameter(name, configFile=LATCH_CONFIG):

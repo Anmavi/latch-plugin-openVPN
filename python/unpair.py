@@ -25,7 +25,6 @@
 
 import sys
 import os
-import urllib.request
 import latch
 
 from latchHelper import *
@@ -60,9 +59,8 @@ if accountId == None:
 api = latch.Latch(app_id, secret_key);
 latch.Latch.set_host(LATCH_HOST);
 
-accountIdUrl = urllib.request.pathname2url(accountId);
 try:
-    res = api.unpair(accountIdUrl);
+    res = api.unpair(accountId);
 except:
     print("Error: Some exception happened")
     exit()

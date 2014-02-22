@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 # vim: set fileencoding=utf-8
 # Run as root
@@ -46,8 +46,8 @@ if os.path.isfile(LATCH_ACCOUNTS):
     os.remove(LATCH_ACCOUNTS)
 if os.path.isfile(LATCH_CONFIG):
     os.remove(LATCH_CONFIG)
-if os.path.isdir(LATCH_PATH):
-    shutil.rmtree(LATCH_PATH)
+if os.path.isdir(LATCH_OPENVPN_PATH):
+    shutil.rmtree(LATCH_OPENVPN_PATH)
 if os.path.isfile(PAIR_BIN):
     os.remove(PAIR_BIN)
 if os.path.isfile(UNPAIR_BIN):

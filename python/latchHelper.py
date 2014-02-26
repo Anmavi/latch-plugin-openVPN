@@ -37,7 +37,7 @@ OPENVPN_PAM_CONFIG_FILE = "/etc/pam.d/openvpn"
 
 LATCH_PAM_SO = "/lib/security/pam_latch.so"
 
-LATCH_PAM_CONFIG = "auth       required	    " + LATCH_PAM_SO + "    accounts=" + LATCH_ACCOUNTS + "    config=" + LATCH_CONFIG
+LATCH_PAM_CONFIG = "auth        required        " + LATCH_PAM_SO + "    accounts=" + LATCH_ACCOUNTS + "    config=" + LATCH_CONFIG
 
 PAIR_BIN = "/usr/bin/pairOVPN"
 UNPAIR_BIN = "/usr/bin/unpairOVPN"

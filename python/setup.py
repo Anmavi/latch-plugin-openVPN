@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 # vim: set fileencoding=utf-8
 # Run as root
@@ -75,6 +75,8 @@ else:
 # install latch in /usr/lib/openvpn/
 if not os.path.isdir(LATCH_PATH):
     os.mkdir(LATCH_PATH)
+if not os.path.isdir(LATCH_OPENVPN_PATH):
+    os.mkdir(LATCH_OPENVPN_PATH)
 if not os.path.isfile(LATCH_PLUGIN_GUI):
     os.open (LATCH_PLUGIN_GUI, os.O_CREAT, int("0100",8))
     shutil.copyfile('latchPluginGUI.py', LATCH_PLUGIN_GUI)

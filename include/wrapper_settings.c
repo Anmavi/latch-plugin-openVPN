@@ -7,9 +7,9 @@
 int main(int argc, char **argv)
 {
 	if(argc == 1){
-		execl("/usr/lib/openvpn/latch/settingsGUI.py", "settingsGUI.py", NULL);
+		execl("/usr/lib/latch/openvpn/settingsGUI.py", "settingsGUI.py", NULL);
 	}else if(argc == 3 && strncmp("-f", argv[1], 2) == 0){
-		execl("/usr/lib/openvpn/latch/settings.py", "settings.py", "-f", argv[2], NULL);
+		execl("/usr/lib/latch/openvpn/settings.py", "settings.py", "-f", argv[2], NULL);
 	}else{
 		printf("use 'sudo config_latchOVPN [-f latch.conf]'\n");
 	}

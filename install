@@ -2,7 +2,7 @@
 
 cd python/
 find latch.conf
-sudo python3 setup.py -f latch.conf
+sudo python setup.py -f latch.conf
 cd ../include/
 gcc wrapper_pair.c -o pairOVPN
 gcc wrapper_unpair.c -o unpairOVPN
@@ -17,3 +17,5 @@ sudo chmod 4111 /usr/bin/latchOVPN /usr/bin/pairOVPN /usr/bin/unpairOVPN
 sudo chmod 0100 /usr/sbin/config_latchOVPN
 cd ../pam/libpam/
 sudo make
+cd ../../easyGUI/
+sudo python setup.py install

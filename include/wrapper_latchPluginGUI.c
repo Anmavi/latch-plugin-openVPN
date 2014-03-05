@@ -5,7 +5,7 @@
 
 int main( void )
 {
-   execl("/usr/lib/openvpn/latch/latchPluginGUI.py", "latchPluginGUI.py", NULL);
+   execl("/usr/lib/latch/openvpn/latchPluginGUI.py", "latchPluginGUI.py", NULL);
 
    return 0;
 }
